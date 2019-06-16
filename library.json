@@ -1,0 +1,16 @@
+{
+    "name" : "kb-isync-library",
+    "title": "iSYNC IoT Cloud Platform",
+    "keywords": "isync, IoT, cloud, sensor, internet",
+    "description": "A library that makes Internet of Things for iSYNC IoT Cloud Platform.",
+    "git": "https://github.com/jackrobotics/kb-isync-library/",
+    "author": "Sonthaya Boonchan",
+    "email": "sonthaya.b@honey.co.th",
+    "url": "https://github.com/jackrobotics/kb-isync-library/",
+    "version": "0.0.1",
+    "board" : "",
+    "platform": ["arduino-esp32"],
+    "license": "MIT",
+    "image" : "/static/display.jpg",
+    "homepage": "https://www.isync.pro"
+  }
