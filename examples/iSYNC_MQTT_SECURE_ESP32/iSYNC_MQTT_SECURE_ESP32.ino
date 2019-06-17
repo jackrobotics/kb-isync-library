@@ -1,5 +1,6 @@
 #include <WiFiClientSecure.h>
 #include <iSYNC.h>
+#include <PubSubClient.h>
 
 WiFiClientSecure clientSecure;
 iSYNC iSYNC(clientSecure);

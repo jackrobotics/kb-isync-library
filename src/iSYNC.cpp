@@ -31,6 +31,119 @@ void iSYNC::begin(String ssid, String password)
         Serial.println(ssid);
 #endif
 }
+String iSYNC::HONEY_BLYNK_GET(String token, String pin)
+{
+    String inMSG = "";
+    if (httpRuning)
+    {
+        if (debug)
+            Serial.println("\nHTTP Runing... please wait!");
+        return "";
+    }
+    httpRuning = true;
+    if (debug)
+        Serial.print("\nStarting connection to server...");
+
+    if (!clientSecure->connect("api.blynk.honey.co.th", 443))
+    {
+        if (debug)
+            Serial.println("Connection failed!");
+    }
+    else
+    {
+        if (debug)
+            Serial.println("Connected to server!");
+        String _host = "Host: ";
+        _host += "api.blynk.honey.co.th";
+        // Make a HTTP request:
+        clientSecure->println("GET https://api.blynk.honey.co.th/" + token + "/get/" + pin + " HTTP/1.0");
+        clientSecure->println(_host);
+        clientSecure->println("Connection: close");
+        clientSecure->println();
+
+        while (clientSecure->connected())
+        {
+            String line = clientSecure->readStringUntil('\n');
+            if (line == "\r")
+                break;
+        }
+
+        // if there are incoming bytes available
+        while (clientSecure->available())
+        {
+            char c = clientSecure->read();
+            inMSG += c;
+        }
+        if (debug)
+        {
+            Serial.println("Received Data ::.");
+            Serial.println(inMSG);
+        }
+        clientSecure->stop();
+    }
+    httpRuning = false;
+
+    //decode
+    StaticJsonDocument<200> obj;
+    DeserializationError error = deserializeJson(obj, inMSG);
+    if (debug && error)
+        Serial.println("Error deserializeJson");
+    String payload = obj[0];
+    return payload;
+}
+String iSYNC::HONEY_BLYNK_UPDATE(String token, String pin,String value)
+{
+    String inMSG = "";
+    if (httpRuning)
+    {
+        if (debug)
+            Serial.println("\nHTTP Runing... please wait!");
+        return "";
+    }
+    httpRuning = true;
+    if (debug)
+        Serial.print("\nStarting connection to server...");
+
+    if (!clientSecure->connect("api.blynk.honey.co.th", 443))
+    {
+        if (debug)
+            Serial.println("Connection failed!");
+    }
+    else
+    {
+        if (debug)
+            Serial.println("Connected to server!");
+        String _host = "Host: ";
+        _host += "api.blynk.honey.co.th";
+        // Make a HTTP request:
+        clientSecure->println("GET https://api.blynk.honey.co.th/" + token + "/update/" + pin +"?value="+value+ " HTTP/1.0");
+        clientSecure->println(_host);
+        clientSecure->println("Connection: close");
+        clientSecure->println();
+
+        while (clientSecure->connected())
+        {
+            String line = clientSecure->readStringUntil('\n');
+            if (line == "\r")
+                break;
+        }
+
+        // if there are incoming bytes available
+        while (clientSecure->available())
+        {
+            char c = clientSecure->read();
+            inMSG += c;
+        }
+        if (debug)
+        {
+            Serial.println("Received Data ::.");
+            Serial.println(inMSG);
+        }
+        clientSecure->stop();
+    }
+    httpRuning = false;
+    return inMSG;
+}
 
 String iSYNC::HTTP_GET_RAW(String key, String auth)
 {

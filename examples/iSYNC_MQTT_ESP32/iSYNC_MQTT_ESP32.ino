@@ -1,5 +1,6 @@
 #include <WiFi.h>
 #include <iSYNC.h>
+#include <PubSubClient.h>
 
 WiFiClient client;
 iSYNC iSYNC(client);

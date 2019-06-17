@@ -60,6 +60,9 @@ class iSYNC
         bool mqConnected();
 
         String getVersion(){return Version;};
+
+        String HONEY_BLYNK_GET(String,String);
+        String HONEY_BLYNK_UPDATE(String,String,String);
 };
 
 #endif
